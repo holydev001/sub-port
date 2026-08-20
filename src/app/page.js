@@ -35,7 +35,7 @@ export default function Home() {
 
   return (
     <main className="overflow-x-hidden">
-      <section id="home" className="flex min-h-screen scroll-mt-6 flex-col">
+      <section id="home" className="flex min-h-[100svh] scroll-mt-6 flex-col md:min-h-screen">
         <Header />
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}

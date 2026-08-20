@@ -39,11 +39,11 @@ export default function Nav() {
         initial={prefersReducedMotion ? false : { y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="fixed bottom-5 z-50 w-[calc(100%-32px)] max-w-[520px]"
+        className="mobile-nav-shell fixed z-50 w-[calc(100%-56px)] max-w-[340px]"
       >
         <nav
           aria-label="Page sections"
-          className="theme-nav flex w-full justify-around border p-2 backdrop-blur-md"
+          className="theme-nav flex w-full items-stretch justify-between border p-1.5 backdrop-blur-md"
         >
           {navItems.map(({ id, label, icon: Icon }) => {
             const isActive = activeId === id;
@@ -51,8 +51,9 @@ export default function Nav() {
               <a
                 key={id}
                 href={`#${id}`}
+                aria-label={label}
                 aria-current={isActive ? "location" : undefined}
-                className={`flex min-w-20 items-center justify-center gap-2 border px-3 py-2 text-sm transition-colors sm:min-w-24 ${
+                className={`nav-item relative flex min-h-12 flex-1 items-center justify-center border px-2 py-2 transition-colors ${
                   isActive
                     ? "theme-nav-active text-white"
                     : "border-transparent text-white/55 hover:text-white"
@@ -64,7 +65,7 @@ export default function Nav() {
                 >
                   <Icon className="h-[18px] w-[18px]" />
                 </motion.span>
-                <span className="hidden sm:inline">{label}</span>
+                <span className="sr-only">{label}</span>
               </a>
             );
           })}
