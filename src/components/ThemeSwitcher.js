@@ -25,7 +25,10 @@ export default function ThemeSwitcher() {
 
   useEffect(() => {
     const saved = localStorage.getItem("portfolio-theme");
-    const initial = themes.some(({ id }) => id === saved) ? saved : "blue";
+    const initial =
+      themes.some(({ id }) => id === saved)
+        ? saved
+        : document.documentElement.dataset.theme || "blue";
     applyTheme(initial);
     setTheme(initial);
   }, []);
