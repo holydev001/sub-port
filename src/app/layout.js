@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('portfolio-theme')||'blue';var c={blue:'#015cb3',green:'#0a7a40',red:'#991b1b',graphite:'#4b5563',gold:'#a16207',purple:'#7e22ce'};document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',c[t]||c.blue)}catch(e){}})();`,
+            __html: `(function(){try{var c={blue:'#015cb3',green:'#0a7a40',red:'#991b1b',graphite:'#4b5563',gold:'#a16207',purple:'#7e22ce'};var a=Object.keys(c);var p=localStorage.getItem('portfolio-theme');var o=a.filter(function(t){return t!==p});var t=o[Math.floor(Math.random()*o.length)]||a[0];localStorage.setItem('portfolio-theme',t);document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',c[t])}catch(e){}})();`,
           }}
         />
       </head>
