@@ -3,7 +3,6 @@ import { useRef, useEffect } from "react";
 
 export default function GridTwo({
   gridSize = 48,
-  baseLineColor = "rgba(255,255,255,0.04)",
   pulseColors = ["rgba(59,150,246)", "rgba(59,130,246)"],
   maxPulses = 10,
   spawnInterval = 250,
@@ -15,6 +14,8 @@ export default function GridTwo({
   const sizeRef = useRef({ w: 0, h: 0, cols: 0, rows: 0 });
   const pausedRef = useRef(false);
   const themeColorsRef = useRef(pulseColors);
+  const mobileRef = useRef(false);
+  const resizeFrameRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -40,9 +41,14 @@ export default function GridTwo({
     });
 
     function resize() {
-      const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+      mobileRef.current = window.innerWidth < 768;
+      const DPR = mobileRef.current
+        ? 1
+        : Math.min(window.devicePixelRatio || 1, 1.5);
       const w = Math.floor(window.innerWidth);
       const h = Math.floor(window.innerHeight);
+
+      if (sizeRef.current.w === w && sizeRef.current.h === h) return;
 
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
@@ -108,20 +114,6 @@ export default function GridTwo({
 
       ctx.clearRect(0, 0, w, h);
 
-      // grid (unchanged)
-      ctx.strokeStyle = baseLineColor;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      for (let x = 0; x <= w; x += gridSize) {
-        ctx.moveTo(x + 0.5, 0);
-        ctx.lineTo(x + 0.5, h);
-      }
-      for (let y = 0; y <= h; y += gridSize) {
-        ctx.moveTo(0, y + 0.5);
-        ctx.lineTo(w, y + 0.5);
-      }
-      ctx.stroke();
-
       ctx.globalCompositeOperation = "lighter";
 
       for (let i = pulsesRef.current.length - 1; i >= 0; i--) {
@@ -166,7 +158,7 @@ export default function GridTwo({
         grad.addColorStop(1, p.color);
 
         ctx.fillStyle = grad;
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = mobileRef.current ? 10 : 20;
         ctx.shadowColor = p.color;
         ctx.globalAlpha = 0.9;
         ctx.fillRect(-tailLen, -p.thickness / 2, tailLen, p.thickness);
@@ -194,7 +186,8 @@ export default function GridTwo({
 
       if (t - lastSpawnRef.current > spawnInterval) {
         lastSpawnRef.current = t;
-        if (pulsesRef.current.length < maxPulses) spawnPulse();
+        const pulseLimit = mobileRef.current ? Math.min(maxPulses, 6) : maxPulses;
+        if (pulsesRef.current.length < pulseLimit) spawnPulse();
       }
 
       updateAndDraw(dt);
@@ -202,22 +195,37 @@ export default function GridTwo({
     }
 
     resize();
-    window.addEventListener("resize", resize);
+    const handleResize = () => {
+      if (resizeFrameRef.current) return;
+      resizeFrameRef.current = requestAnimationFrame(() => {
+        resizeFrameRef.current = null;
+        resize();
+      });
+    };
+    window.addEventListener("resize", handleResize, { passive: true });
     const handleVisibilityChange = () => {
       pausedRef.current = document.hidden;
       lastTime = performance.now();
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    const handlePageShow = () => {
+      pausedRef.current = false;
+      lastTime = performance.now();
+      resize();
+    };
+    window.addEventListener("pageshow", handlePageShow);
 
     rafRef.current = requestAnimationFrame(frame);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("pageshow", handlePageShow);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       themeObserver.disconnect();
+      if (resizeFrameRef.current) cancelAnimationFrame(resizeFrameRef.current);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [gridSize, baseLineColor, pulseColors, maxPulses, spawnInterval]);
+  }, [gridSize, pulseColors, maxPulses, spawnInterval]);
 
   return (
     <canvas

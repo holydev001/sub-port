@@ -10,7 +10,7 @@ export default function Header() {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="z-40 flex w-full items-center justify-between p-5 md:px-[70px] md:py-[30px]"
+      className="site-header z-40 flex w-full items-center justify-between p-5 md:px-[70px] md:py-[30px]"
     >
       {/*<img
         src="/log.png"
