@@ -48,8 +48,8 @@ export default function BackgroundGrid() {
             position: "absolute",
             inset: 0,
             backgroundImage: `
-              linear-gradient(to right, rgba(59,130,246,0.3) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(59,130,246,0.3) 1px, transparent 1px)
+              linear-gradient(to right, rgb(var(--accent) / 0.3) 1px, transparent 1px),
+              linear-gradient(to bottom, rgb(var(--accent) / 0.3) 1px, transparent 1px)
             `,
             backgroundSize: "48px 48px",
             maskImage,

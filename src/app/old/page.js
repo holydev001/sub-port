@@ -97,7 +97,7 @@ export default function Home() {
                 ease: "easeInOut",
                 repeat: Infinity,
               }}
-              className="w-[200px] h-[200px] md:w-[400px] md:h-[400px] overflow-hidden rounded-full bg-[rgba(3,150,255,0.3)] border-4 border-blue-500"
+              className="w-[200px] h-[200px] md:w-[400px] md:h-[400px] overflow-hidden bg-[rgba(3,150,255,0.3)] border-4 border-blue-500"
             >
               <img
                 src="/variant2.png"

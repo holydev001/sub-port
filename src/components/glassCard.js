@@ -2,7 +2,7 @@
 export default function GlassCard({ children, className = "" }) {
   return (
     <div
-      className={`relative isolate overflow-hidden  border-2 border-blue-500 rounded-2xl shadow-md ${className}`}
+      className={`relative isolate overflow-hidden border-2 border-blue-500 shadow-md ${className}`}
     >
       {/* single backdrop layer (absolute) */}
       <div

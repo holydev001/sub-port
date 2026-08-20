@@ -1,104 +1,74 @@
 "use client";
 
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { House, Contact, Briefcase } from "lucide-react";
-import { useMemo, useEffect, useState } from "react";
+import { House, Mail, Briefcase } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Nav() {
-  const pathname = usePathname();
   const prefersReducedMotion = useReducedMotion();
-
-  const [isVisible, setIsVisible] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const [activeHref, setActiveHref] = useState(pathname);
-
-  // ✅ Keep activeHref in sync (guarantees ONE active item)
-  useEffect(() => {
-    setActiveHref(pathname);
-  }, [pathname]);
-
-  // Pause animations when tab is inactive
-  useEffect(() => {
-    const onVisibilityChange = () => {
-      setIsVisible(!document.hidden);
-    };
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () =>
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-  }, []);
-
-  // Detect mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
+  const [activeId, setActiveId] = useState("home");
   const navItems = useMemo(
     () => [
-      { href: "/", icon: House },
-      { href: "/about", icon: Briefcase },
-      { href: "/contactPage", icon: Contact },
+      { id: "home", label: "Home", icon: House },
+      { id: "about", label: "Work", icon: Briefcase },
+      { id: "contact", label: "Contact", icon: Mail },
     ],
     [],
   );
 
-  // ✅ Variants guarantee proper animation cleanup
-  const iconVariants = {
-    inactive: {
-      y: 0,
-      scale: 1,
-    },
-    active: {
-      y: [0, -6, 0],
-      scale: [1, 1.1, 1],
-      transition: {
-        duration: 2,
-        ease: "easeInOut",
-        repeat: Infinity,
+  useEffect(() => {
+    const sections = navItems
+      .map(({ id }) => document.getElementById(id))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveId(visible.target.id);
       },
-    },
-  };
+      { rootMargin: "-20% 0px -55%", threshold: [0.1, 0.35, 0.6] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [navItems]);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center">
       <motion.div
-        initial={prefersReducedMotion ? false : { y: "100vh" }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 60, damping: 10 }}
-        className="fixed bottom-[30px] z-50 md:w-[500px] w-[80%]"
+        initial={prefersReducedMotion ? false : { y: 80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="fixed bottom-5 z-50 w-[calc(100%-32px)] max-w-[520px]"
       >
-        <div className="bg-[rgba(3,150,255,0.2)] backdrop-blur-[3px] w-full flex justify-around p-[18px] rounded-[22px] border-2 border-blue-500">
-          {navItems.map(({ href, icon: Icon }) => {
-            const isActive =
-              href === "/" ? pathname === "/" : pathname.startsWith(href);
-
+        <nav
+          aria-label="Page sections"
+          className="theme-nav flex w-full justify-around border p-2 backdrop-blur-md"
+        >
+          {navItems.map(({ id, label, icon: Icon }) => {
+            const isActive = activeId === id;
             return (
-              <Link key={href} href={href} className="flex items-center">
-                <motion.div
-                  variants={iconVariants}
-                  initial="inactive"
-                  animate={
-                    isActive && isVisible && !prefersReducedMotion && !isMobile
-                      ? "active"
-                      : "inactive"
-                  }
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.15 }}
-                  whileTap={{ scale: 0.9 }}
+              <a
+                key={id}
+                href={`#${id}`}
+                aria-current={isActive ? "location" : undefined}
+                className={`flex min-w-20 items-center justify-center gap-2 border px-3 py-2 text-sm transition-colors sm:min-w-24 ${
+                  isActive
+                    ? "theme-nav-active text-white"
+                    : "border-transparent text-white/55 hover:text-white"
+                }`}
+              >
+                <motion.span
+                  whileHover={prefersReducedMotion ? undefined : { y: -2 }}
+                  transition={{ duration: 0.15 }}
                 >
-                  <Icon
-                    className={`w-[22px] h-[22px] transition-colors ${
-                      isActive ? "text-blue-500" : "text-gray-400"
-                    }`}
-                  />
-                </motion.div>
-              </Link>
+                  <Icon className="h-[18px] w-[18px]" />
+                </motion.span>
+                <span className="hidden sm:inline">{label}</span>
+              </a>
             );
           })}
-        </div>
+        </nav>
       </motion.div>
     </div>
   );

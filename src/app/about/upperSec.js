@@ -10,7 +10,7 @@ export default function UpperSec() {
         {/* ABOUT — now grows and contains bio */}
         <GlassCard className="relative flex flex-1 flex-col gap-4 p-[14px]">
           {/* Header */}
-          <div className="bdbg item1 flex items-center gap-4 rounded-[10px] px-[20px] py-[12px]">
+          <div className="bdbg item1 flex items-center gap-4 px-[20px] py-[12px]">
             <Image
               width={90}
               height={90}
@@ -18,14 +18,14 @@ export default function UpperSec() {
               alt="Profile picture"
               loading="lazy"
               decoding="async"
-              className="h-[90px] w-[90px]  rounded-full border-[2px] border-blue-500 bg-[rgba(3,150,255,0.3)]"
+              className="theme-tint h-[90px] w-[90px] border-[2px] border-blue-500"
             />
 
             <a
               href="https://drive.google.com/file/d/10fGkRdGm-2iDLL9nR2aYa3JiUtPm4hOV/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-[40px] items-center rounded-[10px] border-[2px] border-blue-500 bg-[rgba(3,150,255,0.3)] px-[14px]"
+              className="theme-tint flex h-[40px] items-center border-[2px] border-blue-500 px-[14px]"
             >
               <span className="text-[18px] font-bold">Resume</span>
             </a>
@@ -33,7 +33,7 @@ export default function UpperSec() {
 
           {/* BIOGRAPHY */}
           <div className="flex flex-col gap-3">
-            <div className="rounded-[12px] border border-blue-500/40 bg-[rgba(3,150,255,0.15)] p-[12px]">
+            <div className="theme-panel border border-blue-500/40 p-[12px]">
               <p className="text-[14px] leading-relaxed text-white/80">
                 I’m a full-stack developer with a strong focus on building
                 clean, scalable, and user-friendly web applications. I enjoy
@@ -43,7 +43,7 @@ export default function UpperSec() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-blue-500/40 bg-[rgba(3,150,255,0.15)] p-[12px]">
+            <div className="theme-panel border border-blue-500/40 p-[12px]">
               <p className="text-[14px] leading-relaxed text-white/80">
                 My experience spans frontend and backend development, with a
                 growing interest in system design, performance optimization, and
@@ -71,7 +71,7 @@ export default function UpperSec() {
         </h2>
 
         <div className="flex flex-col gap-3">
-          <div className="rounded-[12px] border border-blue-500/40 bg-[rgba(3,150,255,0.15)] p-[12px]">
+          <div className="theme-panel border border-blue-500/40 p-[12px]">
             <p className="text-[15px] font-medium">Project Management</p>
             <span className="text-[13px] text-white/60">
               Joint Professional Training and Support
@@ -82,7 +82,7 @@ export default function UpperSec() {
             href="https://drive.google.com/file/d/10fGkRdGm-2iDLL9nR2aYa3JiUtPm4hOV/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-[12px] border border-blue-500/40 bg-[rgba(3,150,255,0.15)] p-[12px] transition hover:bg-[rgba(3,150,255,0.25)]"
+            className="theme-panel border border-blue-500/40 p-[12px] transition"
           >
             <p className="text-[15px] font-medium group-hover:underline">
               Introduction to Programming
@@ -90,14 +90,14 @@ export default function UpperSec() {
             <span className="text-[13px] text-white/60">Suacode</span>
           </a>
 
-          <div className="rounded-[12px] border border-blue-500/40 bg-[rgba(3,150,255,0.15)] p-[12px]">
+          <div className="theme-panel border border-blue-500/40 p-[12px]">
             <p className="text-[15px] font-medium">
               Foundations of Web Development
             </p>
             <span className="text-[13px] text-white/60">Udemy</span>
           </div>
 
-          <div className="rounded-[12px] border border-blue-500/40 bg-[rgba(3,150,255,0.15)] p-[12px]">
+          <div className="theme-panel border border-blue-500/40 p-[12px]">
             <p className="text-[15px] font-medium">
               Full Stack Web Development
             </p>

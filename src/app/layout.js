@@ -6,7 +6,7 @@ import { Barlow_Condensed } from 'next/font/google';
 
 export const metadata = {
   title: 'David Adams – Portfolio',
-  description: 'Showcasing my projects and skills',
+  description: 'Full-stack developer building fast, accessible, and dependable web products.',
   icons: {
     icon: '/icon.svg',
   },

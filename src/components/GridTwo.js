@@ -15,15 +15,33 @@ export default function GridTwo({
   const pixelRatioRef = useRef(1);
   const sizeRef = useRef({ w: 0, h: 0, cols: 0, rows: 0 });
   const pausedRef = useRef(false);
+  const themeColorsRef = useRef(pulseColors);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    const updateThemeColors = () => {
+      const styles = getComputedStyle(document.documentElement);
+      const pulse = styles.getPropertyValue("--pulse-a").trim().replaceAll(" ", ",");
+      const accent = styles.getPropertyValue("--accent").trim().replaceAll(" ", ",");
+      const colors = [`rgba(${pulse},1)`, `rgba(${accent},1)`];
+      themeColorsRef.current = colors;
+      pulsesRef.current.forEach((item, index) => {
+        item.color = colors[index % colors.length];
+      });
+    };
+    updateThemeColors();
+    const themeObserver = new MutationObserver(updateThemeColors);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     function resize() {
-      const DPR = window.devicePixelRatio || 1;
+      const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
       pixelRatioRef.current = DPR;
 
       const w = Math.floor(window.innerWidth);
@@ -61,7 +79,10 @@ export default function GridTwo({
         dir: dirs[Math.floor(Math.random() * dirs.length)],
         offset: Math.random() * gridSize * 0.4,
         speed: 40 + Math.random() * 5,
-        color: pulseColors[Math.floor(Math.random() * pulseColors.length)],
+        color:
+          themeColorsRef.current[
+            Math.floor(Math.random() * themeColorsRef.current.length)
+          ],
         thickness: 2,
       });
 
@@ -159,12 +180,18 @@ export default function GridTwo({
     }
 
     let lastTime = performance.now();
+    let lastDrawTime = 0;
     function frame(t) {
       if (pausedRef.current) {
         rafRef.current = requestAnimationFrame(frame);
         return;
       }
 
+      if (t - lastDrawTime < 33) {
+        rafRef.current = requestAnimationFrame(frame);
+        return;
+      }
+      lastDrawTime = t;
       const dt = Math.min(0.05, (t - lastTime) / 1000);
       lastTime = t;
 
@@ -179,14 +206,18 @@ export default function GridTwo({
 
     resize();
     window.addEventListener("resize", resize);
-    document.addEventListener("visibilitychange", () => {
+    const handleVisibilityChange = () => {
       pausedRef.current = document.hidden;
-    });
+      lastTime = performance.now();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     rafRef.current = requestAnimationFrame(frame);
 
     return () => {
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      themeObserver.disconnect();
       cancelAnimationFrame(rafRef.current);
     };
   }, [gridSize, baseLineColor, pulseColors, maxPulses, spawnInterval]);

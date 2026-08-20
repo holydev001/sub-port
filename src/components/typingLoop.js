@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function TypingLoop({
@@ -9,11 +9,13 @@ export default function TypingLoop({
   delayBetween = 1500,
   className = "",
 }) {
+  const prefersReducedMotion = useReducedMotion();
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    if (prefersReducedMotion || words.length === 0) return;
     let timeout;
     const currentWord = words[wordIndex];
 
@@ -47,6 +49,7 @@ export default function TypingLoop({
     typingSpeed,
     eraseSpeed,
     delayBetween,
+    prefersReducedMotion,
   ]);
 
   return (
@@ -56,9 +59,9 @@ export default function TypingLoop({
       transition={{ duration: 0.3 }}
       className={`font-medium ${className}`}
     >
-      {text}
+      {prefersReducedMotion ? words[0] : text}
       <motion.span
-        animate={{ opacity: [1, 0] }}
+        animate={prefersReducedMotion ? undefined : { opacity: [1, 0] }}
         transition={{ repeat: Infinity, duration: 0.8 }}
         className="inline-block w-1 bg-white ml-1 align-middle"
       />

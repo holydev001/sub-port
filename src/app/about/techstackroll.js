@@ -32,7 +32,7 @@ export default function RollingIcons() {
         <ProgressiveBlur
           direction="horizontal"
           intensity="3xl"
-          className="backdrop-blur-2xl rounded-2xl"
+          className="backdrop-blur-2xl"
         />
 
         {/* Scrolling container */}

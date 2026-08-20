@@ -4,6 +4,10 @@ import Header from "../components/header";
 import TypingLoop from "../components/typingLoop";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMemo } from "react";
+import UpperSec from "./about/upperSec";
+import LowerSec from "./about/lowerSec";
+import ContactPage from "./contactPage/page";
+import Reveal from "../components/Reveal";
 
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
@@ -30,72 +34,83 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen overflow-hidden flex flex-col">
-      <Header />
-
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="flex-1 flex justify-center items-center"
-      >
-        <div className="flex flex-col-reverse md:flex-row items-center justify-center md:px-[100px] px-[30px] mb-[100px]">
-          {/* LEFT CONTENT */}
-          <div className="md:w-[50%] flex flex-col items-center ">
-            <h1 className="md:text-[70px] text-[45px] leading-6.5 font-bold glowing-text md:leading-10 text-[#ffffffa2]">
-              Fullstack <br />{" "}
-              <span className="text-white ml-5">Developer</span>
-            </h1>
-
-            <TypingLoop
-              words={[
-                "Frontend Developer",
-                "Backend Developer",
-                "React Developer",
-                "Node.js Developer",
-                "Next.js Developer",
-              ]}
-              typingSpeed={100}
-              eraseSpeed={50}
-              delayBetween={1200}
-              className="text-xl glowing-text mt-[20px] text-blue-200"
-            />
-
-            <p className=" md:text-[18px] text-[15px] text-center font-normal text-[rgba(255,255,255,0.51)]">
-              Hi i'm <span className="text-white">David</span>, Bringing your
-              digital ideas to life with innovative design and seamless
-              development. I specialize in creating responsive, user-friendly
-              websites that not only look great but perform flawlessly. Explore
-              my portfolio to see how I can help transform your vision into a
-              captivating online experience.
-            </p>
-
-            {/* ICONS */}
-            <div className="flex mt-[20px] justify-center md:justify-start md:w-[200px]">
-              {icons.map((icon) => (
-                <motion.a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  key={icon.alt}
-                  href={icon.link}
-                  whileHover={!prefersReducedMotion ? { scale: 1.25 } : {}}
-                  transition={{ duration: 0.25 }}
-                  className="mx-[20px] md:mx-0 md:mr-[20px]"
-                >
-                  <img
-                    src={icon.src}
-                    alt={icon.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-[35px] max-h-[35px] w-[35px]"
-                  />
-                </motion.a>
-              ))}
+    <main className="overflow-x-hidden">
+      <section id="home" className="flex min-h-screen scroll-mt-6 flex-col">
+        <Header />
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.35 }}
+          className="flex flex-1 items-center justify-center"
+        >
+          <div className="mb-24 flex items-center justify-center px-7 md:px-24">
+            <div className="hero-intro flex max-w-[760px] flex-col items-center">
+              <p className="mb-4 font-mono text-xs uppercase tracking-[0.32em] text-blue-300">
+                David Adams — Full-stack developer
+              </p>
+              <h1 className="glowing-text text-center text-[52px] font-bold leading-[0.9] text-white md:text-[88px]">
+                Building digital
+                <br />
+                products that work.
+              </h1>
+              <TypingLoop
+                words={[
+                  "Frontend engineering",
+                  "Backend development",
+                  "Responsive interfaces",
+                  "Scalable web applications",
+                ]}
+                typingSpeed={72}
+                eraseSpeed={36}
+                delayBetween={1600}
+                className="mt-6 min-h-7 text-lg text-blue-200"
+              />
+              <p className="mt-5 max-w-[620px] text-center text-[16px] leading-relaxed text-white/65 md:text-[18px]">
+                I turn ideas into fast, accessible, and dependable web
+                experiences—from polished interfaces to the systems behind them.
+              </p>
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+                <a className="action-link" href="#projects">View projects</a>
+                <a className="action-link action-link-secondary" href="#contact">
+                  Start a conversation
+                </a>
+              </div>
+              <div className="mt-7 flex justify-center gap-5">
+                {icons.map((icon) => (
+                  <motion.a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={icon.alt}
+                    href={icon.link}
+                    whileHover={prefersReducedMotion ? undefined : { y: -3 }}
+                    transition={{ duration: 0.18 }}
+                    className="opacity-70 transition-opacity hover:opacity-100"
+                  >
+                    <img src={icon.src} alt={icon.alt} className="h-7 w-7" />
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </div>
+        </motion.div>
+      </section>
+
+      <section id="about" className="page-section scroll-mt-10">
+        <Reveal className="section-heading">
+          <span>01</span>
+          <div>
+            <p>Profile</p>
+            <h2>About & expertise</h2>
+          </div>
+        </Reveal>
+        <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-3">
+          <Reveal><UpperSec /></Reveal>
+          <Reveal delay={0.08}><LowerSec /></Reveal>
         </div>
-      </motion.div>
-    </div>
+      </section>
+
+      <ContactPage />
+    </main>
   );
 }

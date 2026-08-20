@@ -3,8 +3,9 @@ import Link from "next/link";
 import GlassCard from "@/components/glassCard";
 import { getProjectBySlug } from "@/app/data/data";
 
-export default function ProjectDetailPage({ params }) {
-  const project = getProjectBySlug(params.slug);
+export default async function ProjectDetailPage({ params }) {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
 
   if (!project) {
     notFound();
@@ -20,7 +21,7 @@ export default function ProjectDetailPage({ params }) {
         {/* Title */}
          <div className="mb-2">
         <Link
-          href="/about"
+          href="/#projects"
           className="text-sm font-medium flex text-blue-400 hover:text-blue-300"
         >
           🡨  Back to Projects
@@ -38,7 +39,7 @@ export default function ProjectDetailPage({ params }) {
         </p>
 
         {/* Image */}
-        <div className="my-6 overflow-hidden rounded-xl border border-blue-500/40">
+        <div className="my-6 overflow-hidden border border-blue-500/40">
           <img
             src={project.coverImage}
             alt={project.name}
@@ -57,7 +58,7 @@ export default function ProjectDetailPage({ params }) {
               {project.techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-full border border-blue-500/40 bg-[rgba(3,150,255,0.15)] px-3 py-1 text-[12px] text-white/80"
+                  className="theme-panel border border-blue-500/40 px-3 py-1 text-[12px] text-white/80"
                 >
                   {tech}
                 </span>
@@ -79,7 +80,7 @@ export default function ProjectDetailPage({ params }) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-blue-500 bg-[rgba(3,150,255,0.15)] px-4 py-2 text-[13px] text-white hover:bg-[rgba(3,150,255,0.3)]"
+                  className="theme-panel border border-blue-500 px-4 py-2 text-[13px] text-white"
                 >
                   Live Demo
                 </a>
@@ -90,7 +91,7 @@ export default function ProjectDetailPage({ params }) {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-blue-500 px-4 py-2 text-[13px] text-white hover:bg-blue-500/20"
+                  className="theme-panel border border-blue-500 px-4 py-2 text-[13px] text-white"
                 >
                   GitHub Repo
                 </a>

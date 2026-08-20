@@ -21,10 +21,10 @@ export default function GlobalLoader({ children }) {
     originalOverflow.current = document.body.style.overflow || "";
     document.body.style.overflow = "hidden";
 
-    // Minimum loader time (5s)
+    // Keep the transition brief so content is available quickly.
     const timer = setTimeout(() => {
       setMinTimePassed(true);
-    }, 5000);
+    }, 450);
 
     // Page fully loaded
     const handleLoad = () => setReady(true);
@@ -58,7 +58,7 @@ export default function GlobalLoader({ children }) {
   // Loader view
   if (showLoader) {
     return (
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#000814]">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[rgb(var(--surface-deep))]">
         <LoaderVisual />
       </div>
     );
@@ -72,8 +72,8 @@ function LoaderVisual() {
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="relative w-24 h-24">
-        <div className="absolute inset-0 rounded-full border-2 border-blue-500/30" />
-        <div className="absolute inset-0 rounded-full border-t-2 border-blue-500 animate-spin" />
+        <div className="absolute inset-0 border-2 border-blue-500/30" />
+        <div className="absolute inset-0 border-t-2 border-blue-500 animate-spin" />
       </div>
 
       <p className="text-blue-400 text-sm tracking-widest animate-pulse">
