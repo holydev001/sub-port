@@ -1,7 +1,6 @@
 "use client";
 
 import FloatingCircles from "./FloatingCircles";
-import BackgroundGrid from "./gridone";
 import GridTwo from "./GridTwo";
 
 export default function Background() {

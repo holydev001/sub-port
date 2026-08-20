@@ -32,6 +32,8 @@ export default function LowerSec() {
               <motion.img
                 src={project.coverImage}
                 alt={project.name}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover object-center"
                 variants={{
                   rest: { scale: 1, opacity: 0.42 },

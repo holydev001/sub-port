@@ -12,7 +12,6 @@ export default function GridTwo({
   const rafRef = useRef(null);
   const pulsesRef = useRef([]);
   const lastSpawnRef = useRef(0);
-  const pixelRatioRef = useRef(1);
   const sizeRef = useRef({ w: 0, h: 0, cols: 0, rows: 0 });
   const pausedRef = useRef(false);
   const themeColorsRef = useRef(pulseColors);
@@ -42,8 +41,6 @@ export default function GridTwo({
 
     function resize() {
       const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-      pixelRatioRef.current = DPR;
-
       const w = Math.floor(window.innerWidth);
       const h = Math.floor(window.innerHeight);
 
