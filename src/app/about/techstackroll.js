@@ -1,48 +1,43 @@
-"use client";
-
-import Image from "next/image";
-
-import figma from "../../../public/figma.svg";
-import git from "../../../public/git.png";
-import tailwindcss from "../../../public/tailwindcss.svg";
-import bootstrap from "../../../public/bootstrap.svg";
-import css from "../../../public/css.svg";
-import html5 from "../../../public/html5.svg";
-import react from "../../../public/react.svg";
-import javascript from "../../../public/javascript.svg";
-
 import ProgressiveBlur from "../../components/techstack";
 
-export default function RollingIcons() {
-  const icons = [
-    { src: figma, alt: "Figma" },
-    { src: git, alt: "Git" },
-    { src: tailwindcss, alt: "Tailwind CSS" },
-    { src: css, alt: "CSS" },
-    { src: html5, alt: "HTML5" },
-    { src: react, alt: "React" },
-    { src: javascript, alt: "JavaScript" },
-    { src: bootstrap, alt: "Bootstrap" },
-  ];
+const technologies = [
+  { name: "JavaScript", icon: "/tech-icons/javascript.svg" },
+  { name: "TypeScript", icon: "/tech-icons/typescript.svg" },
+  { name: "Python", icon: "/tech-icons/python.svg" },
+  { name: "React", icon: "/tech-icons/react.svg" },
+  { name: "Next.js", icon: "/tech-icons/nextdotjs.svg" },
+  { name: "Tailwind CSS", icon: "/tech-icons/tailwindcss.svg" },
+  { name: "Node.js", icon: "/tech-icons/nodedotjs.svg" },
+  { name: "Express.js", icon: "/tech-icons/express.svg" },
+  { name: "Django", icon: "/tech-icons/django.svg" },
+  { name: "FastAPI", icon: "/tech-icons/fastapi.svg" },
+  { name: "MySQL", icon: "/tech-icons/mysql.svg" },
+  { name: "MongoDB", icon: "/tech-icons/mongodb.svg" },
+  { name: "Supabase", icon: "/tech-icons/supabase.svg" },
+  { name: "React Native", icon: "/tech-icons/react.svg" },
+  { name: "Git", icon: "/tech-icons/git.svg" },
+];
 
+export default function RollingSkills() {
   return (
-    <div className=" w-[700px]  ">
+    <div className="w-[700px]">
       <div className="relative w-full overflow-hidden py-10">
-        {/* Glassy blur edges */}
         <ProgressiveBlur
           direction="horizontal"
           intensity="3xl"
           className="backdrop-blur-2xl"
         />
 
-        {/* Scrolling container */}
         <div className="rolling-track flex items-center gap-7 md:gap-15">
-          {[...icons, ...icons, ...icons, ...icons].map((icon, i) => (
-            <Image
-              key={i}
-              src={icon.src}
-              alt={icon.alt}
-              className="w-[35px] h-[35px] object-contain opacity-90 hover:opacity-100 transition duration-300 shrink-0"
+          {[...technologies, ...technologies].map((technology, index) => (
+            <img
+              key={`${technology.name}-${index}`}
+              src={technology.icon}
+              alt={technology.name}
+              title={technology.name}
+              loading="lazy"
+              decoding="async"
+              className="h-9 w-9 shrink-0 object-contain opacity-90 transition duration-300 hover:scale-110 hover:opacity-100"
             />
           ))}
         </div>
