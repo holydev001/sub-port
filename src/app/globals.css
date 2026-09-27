@@ -355,29 +355,83 @@ html {
   }
 }
 
-.contact-glow {
- /* box-shadow: 0 0 15px rgba(3, 150, 255, 0.8), 0 0 25px rgba(3, 150, 255, 0.5);  Glow effect */
-  border: 2px solid rgb(var(--accent) / 0.8);
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 50px;
-  border-radius: 0;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+.contact-command {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgb(var(--accent) / 0.1), rgba(255, 255, 255, 0.035) 48%, transparent 78%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 30px 90px rgba(0, 0, 0, 0.22);
+  -webkit-backdrop-filter: blur(32px) saturate(155%);
+  backdrop-filter: blur(32px) saturate(155%);
 }
 
-.contact-input {
-  border-bottom: 1px solid rgb(var(--accent));
-  width: 90%;
-  margin-bottom: 30px;
-  z-index: 2000;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  outline: none;
-  overflow-wrap: break-word;
+.contact-command::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(to right, rgb(var(--accent) / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--accent) / 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom right, black, transparent 72%);
+}
+
+.contact-command > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-command-header {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.055), transparent);
+}
+
+.contact-status-dot {
+  box-shadow: 0 0 14px rgba(74, 222, 128, 0.85);
+  animation: contact-signal 1.8s ease-in-out infinite;
+}
+
+.contact-primary-action,
+.contact-social-node {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgb(var(--accent) / 0.045) 58%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.contact-primary-action:hover,
+.contact-social-node:hover {
+  border-color: rgb(var(--accent-light) / 0.85);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgb(var(--accent) / 0.1) 58%, transparent);
+}
+
+.project-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgb(var(--accent) / 0.055));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 58px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  backdrop-filter: blur(20px) saturate(145%);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.project-card:hover {
+  border-color: rgb(var(--accent-light) / 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 28px 72px rgb(var(--accent) / 0.16);
+}
+
+.project-card-image::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(to top, rgb(var(--surface-deep) / 0.72), transparent 58%);
+  pointer-events: none;
+}
+
+@keyframes contact-signal {
+  0%, 100% { opacity: 0.55; transform: scale(0.82); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
 .glowing-text {
