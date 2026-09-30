@@ -82,7 +82,7 @@ export default async function ProjectDetailPage({ params }) {
                   rel="noopener noreferrer"
                   className="theme-panel border border-blue-500 px-4 py-2 text-[13px] text-white"
                 >
-                  Live Demo
+                  {project.liveLabel || "Live Demo"}
                 </a>
               )}
 

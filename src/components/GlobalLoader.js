@@ -47,6 +47,17 @@ export default function GlobalLoader({ children }) {
   useEffect(() => {
     if (mounted && !showLoader) {
       document.body.style.overflow = originalOverflow.current || "auto";
+
+      const targetId = window.location.hash.slice(1);
+      if (targetId) {
+        const firstFrame = requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.getElementById(targetId)?.scrollIntoView({ block: "start" });
+          });
+        });
+
+        return () => cancelAnimationFrame(firstFrame);
+      }
     }
   }, [showLoader, mounted]);
 
