@@ -1,6 +1,7 @@
 import GlassCard from "@/components/glassCard";
 import Techstack from "./techstackroll";
 import Image from "next/image";
+import { experience } from "@/app/data/data";
 
 export default function UpperSec() {
   return (
@@ -22,7 +23,7 @@ export default function UpperSec() {
             />
 
             <a
-              href="https://drive.google.com/file/d/10fGkRdGm-2iDLL9nR2aYa3JiUtPm4hOV/view?usp=drive_link"
+              href="/holydev.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="theme-tint flex h-[40px] items-center border-[2px] border-blue-500 px-[14px]"
@@ -35,19 +36,17 @@ export default function UpperSec() {
           <div className="flex flex-col gap-3">
             <div className="theme-panel border border-blue-500/40 p-[12px]">
               <p className="text-[14px] leading-relaxed text-white/80">
-                I’m a full-stack developer with a strong focus on building
-                clean, scalable, and user-friendly web applications. I enjoy
-                turning complex ideas into practical digital solutions and
-                continuously improving my craft through hands-on projects and
-                learning.
+                I&apos;m a full-stack developer based in Nigeria with 3+ years
+                building modern web applications from end to end. I work
+                across JavaScript, TypeScript, React, Next.js, and Node.js.
               </p>
             </div>
 
             <div className="theme-panel border border-blue-500/40 p-[12px]">
               <p className="text-[14px] leading-relaxed text-white/80">
-                My experience spans frontend and backend development, with a
-                growing interest in system design, performance optimization, and
-                developer experience.
+                I focus on clean architecture, predictable APIs, performance,
+                and interfaces that respect the user&apos;s time. I currently shape
+                admin analytics and data visualization tools at Emerj LLC.
               </p>
             </div>
           </div>
@@ -64,45 +63,28 @@ export default function UpperSec() {
         </GlassCard>
       </div>
 
-      {/* RIGHT COLUMN — CERTIFICATIONS */}
+      {/* RIGHT COLUMN — EXPERIENCE */}
       <GlassCard className="flex w-full flex-1 flex-col p-[16px]">
         <h2 className="mb-4 text-[22px] font-semibold tracking-wide">
-          Certifications
+          Experience
         </h2>
 
         <div className="flex flex-col gap-3">
-          <div className="theme-panel border border-blue-500/40 p-[12px]">
-            <p className="text-[15px] font-medium">Project Management</p>
-            <span className="text-[13px] text-white/60">
-              Joint Professional Training and Support
-            </span>
-          </div>
-
-          <a
-            href="https://drive.google.com/file/d/10fGkRdGm-2iDLL9nR2aYa3JiUtPm4hOV/view?usp=drive_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="theme-panel border border-blue-500/40 p-[12px] transition"
-          >
-            <p className="text-[15px] font-medium group-hover:underline">
-              Introduction to Programming
-            </p>
-            <span className="text-[13px] text-white/60">Suacode</span>
-          </a>
-
-          <div className="theme-panel border border-blue-500/40 p-[12px]">
-            <p className="text-[15px] font-medium">
-              Foundations of Web Development
-            </p>
-            <span className="text-[13px] text-white/60">Udemy</span>
-          </div>
-
-          <div className="theme-panel border border-blue-500/40 p-[12px]">
-            <p className="text-[15px] font-medium">
-              Full Stack Web Development
-            </p>
-            <span className="text-[13px] text-white/60">Udemy</span>
-          </div>
+          {experience.map((item) => (
+            <div
+              key={`${item.company}-${item.role}`}
+              className="theme-panel border border-blue-500/40 p-[12px]"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <p className="text-[15px] font-medium">{item.role}</p>
+                  <span className="text-[13px] text-blue-200">{item.company}</span>
+                </div>
+                <span className="font-mono text-[11px] text-white/50">{item.period}</span>
+              </div>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/60">{item.summary}</p>
+            </div>
+          ))}
         </div>
       </GlassCard>
     </div>

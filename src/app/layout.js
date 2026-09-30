@@ -5,8 +5,8 @@ import GlobalLoader from '../components/GlobalLoader';
 import { Barlow_Condensed } from 'next/font/google';
 
 export const metadata = {
-  title: 'David Adams – Portfolio',
-  description: 'Full-stack developer building fast, accessible, and dependable web products.',
+  title: 'David Adams (holydev) — Full-Stack Developer',
+  description: 'Portfolio of David Adams, a full-stack developer in Nigeria building thoughtful, performant web applications and digital products.',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',

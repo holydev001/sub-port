@@ -9,10 +9,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "framer-motion": "^12.23.22",
     "lucide-react": "^0.544.0",
-    "next": "16.1.6",
+    "next": "16.3.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
