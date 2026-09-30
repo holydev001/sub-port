@@ -56,10 +56,10 @@ export default function Home() {
               </h1>
               <TypingLoop
                 words={[
-                  "Frontend engineering",
-                  "Backend development",
-                  "Responsive interfaces",
-                  "Scalable web applications",
+                  "React & Next.js",
+                  "Node.js & FastAPI",
+                  "Data visualization",
+                  "Performance engineering",
                 ]}
                 typingSpeed={72}
                 eraseSpeed={36}
@@ -67,8 +67,9 @@ export default function Home() {
                 className="mt-6 min-h-7 text-lg text-blue-200"
               />
               <p className="mt-5 max-w-[620px] text-center text-[16px] leading-relaxed text-white/65 md:text-[18px]">
-                I turn ideas into fast, accessible, and dependable web
-                experiences—from polished interfaces to the systems behind them.
+                Full-stack developer with 3+ years building thoughtful,
+                performant applications—from polished interfaces to the APIs
+                and data systems behind them.
               </p>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
                 <a className="action-link" href="#projects">View projects</a>
